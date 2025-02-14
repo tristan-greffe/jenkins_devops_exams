@@ -21,9 +21,9 @@ pipeline {
         }
       }
     }
-    /// ====================================
-    //                DOCKERHUB
-    /// ====================================
+    /// =====================
+    //      DOCKERHUB
+    /// =====================
     // Build & push movie_db
     stage('Build & push movie-db') { 
       environment {
@@ -58,9 +58,9 @@ pipeline {
         }
       }
     }
-    /// ====================================
-    //                K8S
-    /// ====================================
+    /// =====================
+    //         K8S
+    /// =====================
     // Deploy movie_service, cast_service, nginx & fasapiapp
     stage('Deploy') {
       environment {
@@ -83,9 +83,9 @@ pipeline {
         }
       }
     }
-    /// ====================================
-    //                TESTING
-    /// ====================================
+    /// =====================
+    //          TESTING
+    /// =====================
     // Test connections (movies & casts)
     stage ('Tests') {
       environment {
