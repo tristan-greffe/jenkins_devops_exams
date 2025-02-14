@@ -98,7 +98,7 @@ pipeline {
         }
         script {
           command = """ 
-            curl -X 'POST' 'http://3.252.25.201:8090/api/v1/movies/' -H 'accept: application/json' \
+            curl -X 'POST' 'http://63.34.162.113:8090/api/v1/movies/' -H 'accept: application/json' \
             -H 'Content-Type: application/json' \
             -d '{
             "name": "Starsky & Hutch",
@@ -112,7 +112,7 @@ pipeline {
         script {
           command = """
             curl -X 'POST' \
-            'http://3.252.25.201:8090/api/v1/casts/' \
+            'http://63.34.162.113:8090/api/v1/casts/' \
             -H 'accept: application/json' \
             -H 'Content-Type: application/json' \
             -d '{
