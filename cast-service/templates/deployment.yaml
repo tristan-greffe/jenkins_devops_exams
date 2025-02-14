@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cast-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: cast-service
+  template:
+    metadata:
+      labels:
+        app: cast-service
+    spec:
+      containers:
+        - name: cast-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URI
+              value: "{{ .Values.env.DATABASE_URI }}"
+            - name: CAST_SERVICE_HOST_URL
+              value: "{{ .Values.env.CAST_SERVICE_HOST_URL }}"
+          volumeMounts:
+            - name: cast-service-volume
+              mountPath: /app
+      volumes:
+        - name: cast-service-volume
+          hostPath:
+            path: /home/ubuntu/EXAM_JENKINS/Jenkins_devops_exams/cast-service
+            type: Directory

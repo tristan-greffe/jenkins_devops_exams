@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: movie-service
+  template:
+    metadata:
+      labels:
+        app: movie-service
+    spec:
+      containers:
+        - name: movie-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URI
+              value: "{{ .Values.env.DATABASE_URI }}"
+            - name: CAST_SERVICE_HOST_URL
+              value: "{{ .Values.env.CAST_SERVICE_HOST_URL }}"
+          volumeMounts:
+            - name: movie-service-volume
+              mountPath: /app
+      volumes:
+        - name: movie-service-volume
+          hostPath:
+            path: /home/ubuntu/EXAM_JENKINS/Jenkins_devops_exams/movie-service/
+            type: Directory          

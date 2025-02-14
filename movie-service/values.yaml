@@ -1,0 +1,33 @@
+replicaCount: 1
+
+image:
+  repository: codask/movie_db
+  pullPolicy: IfNotPresent
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8001
+  targetPort: 8000
+
+env:
+  DATABASE_URI: postgresql://movie_db_username:movie_db_password@movie-db/movie_db_dev
+  CAST_SERVICE_HOST_URL: http://cast-service:8002/api/v1/casts/
+
+volumes:
+  - name: movie-service-volume
+    hostPath:
+      path: /path/to/local/movie-service
+      type: Directory
+
+volumeMounts:
+  - name: movie-service-volume
+    mountPath: /app
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi

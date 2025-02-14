@@ -1,0 +1,32 @@
+replicaCount: 1
+
+image:
+  repository: codask/cast_db
+  pullPolicy: IfNotPresent
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8002
+  targetPort: 8000
+
+env:
+  DATABASE_URI: postgresql://cast_db_username:cast_db_password@cast-db/cast_db_dev
+
+volumes:
+  - name: cast-service-volume
+    hostPath:
+      path: /path/to/local/cast-service
+      type: Directory
+
+volumeMounts:
+  - name: cast-service-volume
+    mountPath: /app
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi

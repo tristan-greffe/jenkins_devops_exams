@@ -1,0 +1,23 @@
+nginx:
+  image: nginx:latest
+  ports:
+    containerPort: 8090
+    servicePort: 8090
+  volumes:
+  - name: nginx-service-volume
+    hostPath:
+      path: /etc/nginx/conf.d/default.conf
+      type: Directory
+  volumeMounts:
+  - name: nginx-service-volume
+    mountPath: ./nginx_config.conf
+  dependencies:
+    - cast-service
+    - movie-service
+
+serviceAccount:
+  create: true
+  name: ""
+  automount: true
+  annotations: {}
+
